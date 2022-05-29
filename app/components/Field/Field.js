@@ -3,6 +3,7 @@ import "./Field.css"
 
 import { Square } from '../../components/Square/Square';
 import { Header } from "../Header/Header";
+import { CrossingLine } from "../CrossingLine/CrossingLine";
 
 export class Field extends Component{
  
@@ -12,6 +13,7 @@ export class Field extends Component{
     inputPossible = true;
     gameOver = false;
     winner = "";
+    crossingLine;
 
     squareState = {
         1: null,
@@ -87,6 +89,8 @@ export class Field extends Component{
             console.log(winner + " wins");
             
             this.header = [ <Header key = {"header" + this.turn} gameOver = {this.gameOver} turn = {this.turn} player = {this.player} winner = {this.winner}/> ];
+
+            this.addCrossingLine(winningCombo);
         }
     }
 
@@ -104,6 +108,10 @@ export class Field extends Component{
         } 
 
         this.setState({});
+    }
+
+    addCrossingLine = (winningCombo) => {
+        this.crossingLine = <CrossingLine winningCombo = {winningCombo} ></CrossingLine>
     }
 
     constructor(props){
@@ -131,6 +139,7 @@ export class Field extends Component{
                 {this.header}
                 <div className="field">
                     {this.squares}
+                    {this.crossingLine}
                 </div>
             </>
         )

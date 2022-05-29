@@ -1,10 +1,10 @@
 .field{
     margin: 20px;
     display: flex;
-    height: 300px;
+    height: 280px;
     width: 300px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    
+    position: relative;
 }

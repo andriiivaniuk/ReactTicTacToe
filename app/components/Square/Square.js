@@ -19,8 +19,7 @@ export class Square extends Component{
         }
 
         if(this.clicked === false){
-            console.log(this.props.gameOver);
-            console.log("id: " + this.id + ", turn " + this.props.turn);
+            console.log("square id: " + this.id + ", turn " + this.props.turn);
 
             this.clicked = true;
             this.className = "square-clicked";
