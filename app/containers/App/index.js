@@ -8,21 +8,33 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Square } from '../../components/Square/Square';
+import { Field } from '../../components/Field/Field';
+import {ResetButton} from '../../components/ResetButton/ResetButton';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+class App extends React.Component {
 
-import GlobalStyle from '../../global-styles';
-
-export default function App() {
-  return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
-    </div>
-  );
+constructor(){
+  super()
+  this.state = {};
 }
+
+resetClick = () => {
+  console.log("reset");
+  this.game[0] = <Field key = {Math.random()} ></Field>;
+  this.setState({});
+}
+
+game = [<Field key = {Math.random()} ></Field>];
+
+render() {
+    return (
+      <div className="App">
+       {this.game[0]}
+       <ResetButton onClick = {() => this.resetClick()} ></ResetButton>
+      </div>
+    );
+  }
+}
+
+export default App;
