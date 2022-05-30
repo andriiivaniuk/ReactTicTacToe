@@ -1,0 +1,7 @@
+.header{
+    display: flex;
+    justify-content: center;
+    max-width: 330px;
+    font-weight: 600;
+    font-size: 2em;
+}
