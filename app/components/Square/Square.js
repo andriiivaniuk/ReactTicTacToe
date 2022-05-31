@@ -4,46 +4,44 @@ import './Square.css';
 export class Square extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      value: null,
+      clicked: false,
+      className: 'square'
+    };
   }
 
   id = this.props.id;
 
-  className = 'square';
-
-  clicked = false;
-
-  value = '';
-
   clickHandle = () => {
-    if (this.props.turn[0] === 'GAME OVER') {
+    if (this.props.turn === 'GAME OVER') {
       return;
     }
 
-    if (this.clicked === false) {
-      console.log(`square id: ${this.id}, turn ${this.props.turn}`);
-
-      this.clicked = true;
-      this.className = 'square-clicked';
+    if (this.state.clicked === false) {
 
       if (this.props.turn % 2 === 0) {
-        this.value = 'X';
+        this.setState({
+          value: "X",
+          clicked: true,
+          className: 'square-clicked'
+        }, () => this.props.changeSquaresState(this.id, this.state.value))
+
       } else {
-        this.value = 'O';
+        this.setState({
+          value: "O",
+          clicked: true,
+          className: 'square-clicked'
+        },  () => this.props.changeSquaresState(this.id, this.state.value))
       }
-
-      this.props.parentStateFunc();
-      this.props.changePlayerFunc();
-      this.props.changeSquaresState(this.id, this.value);
-
-      this.setState({});
+    
     }
   };
 
   render() {
     return (
-      <div className={this.className} onClick={this.clickHandle}>
-        {this.value}
+      <div className={this.state.className} onClick={this.clickHandle}>
+        {this.state.value}
       </div>
     );
   }

@@ -6,17 +6,21 @@ import { Header } from '../Header/Header';
 import { CrossingLine } from '../CrossingLine/CrossingLine';
 
 export class Field extends Component {
-  squares = [];
 
-  turn = [0];
+  constructor(props) {
+    super(props);
 
-  player = ['X'];
+      this.squares = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+      this.state = {
+        winner: "",
+        gameOver: false,
+        player: "X",
+        turn: 0,  
+      }
+  }
 
   inputPossible = true;
-
-  gameOver = false;
-
-  winner = '';
 
   crossingLine;
 
@@ -43,27 +47,22 @@ export class Field extends Component {
       [3,6,9],
   ];
 
-  header = [
-    <Header
-      key="header"
-      gameOver={this.gameOver}
-      turn={this.turn}
-      player={this.player}
-    />
-  ];
 
   changeSquaresState = (id, player) => {
-      this.squareState[id] = player;
 
-      if(this.turn > 3 && !this.gameOver){
-      this.checkGameStatus();
+    
+    this.changeTurnFunc();
+    this.squareState[id] = player;
+
+      if(this.state.turn > 3 ){
+        this.checkGameStatus();
       }
   };
 
   checkGameStatus = () => {
-      if(this.turn[0] === 9){
+      if(this.state.turn === 8){
         this.setGameOver("DRAW", "none");
-    }
+      }
 
       for(let i = 0; i < this.winningPositions.length; i++){
         if (this.winningPositions[i].every(
@@ -83,71 +82,75 @@ export class Field extends Component {
 
   setGameOver = (winner, winningCombo) => {
       if(winner === "DRAW"){
+
       this.inputPossible = false;
-      this.gameOver = true;
-        this.turn[0] = "GAME OVER";
-        console.log("DRAW!");
-        this.winner = "Nobody";
-        this.header = [ <Header key = {`header${  this.turn}`} gameOver = {this.gameOver} turn = {this.turn} player = {this.player} winner = {this.winner}/> ];
-      }
+
+      this.setState({
+        winner: "Nobody",
+        gameOver: true,
+        turn: "GAME OVER"
+      })
+
+      console.log(`${winner  } wins`);
+    }
       
       if(winner === "X" || winner === "O"){
         this.inputPossible = false;
-      this.gameOver = true;
-      this.winner = winner;
 
-        this.turn[0] = "GAME OVER";
+        this.setState({
+          winner: winner,
+          gameOver: true,
+          turn: "GAME OVER"
+        })
+
         console.log(`${winner  } wins`);
-
-        this.header = [ <Header key = {`header${  this.turn}`} gameOver = {this.gameOver} turn = {this.turn} player = {this.player} winner = {this.winner}/> ];
 
         this.addCrossingLine(winningCombo);
       }
   };
 
   changeTurnFunc = () => {
-      this.turn[0]++;
-      this.header = [ <Header key = {`header${  this.turn}`} gameOver = {this.gameOver} turn = {this.turn} player = {this.player}/> ];
-  };
+      
+      if(this.state.player === "X"){
+        this.setState({
+          winner: "",
+          gameOver: false,
+          player: "O",
+          turn: this.state.turn + 1,
 
-  changeStateFunc = () => {
-      if(this.player[0] === "X"){
-        this.player[0] = "O";
+        });
       } 
       else{
-        this.player[0] = "X";
+          this.setState({
+            winner: "",
+            gameOver: false,
+            player: "X",
+            turn: this.state.turn + 1,
+            
+        });
       } 
-
-    this.setState({});
+      
   };
 
   addCrossingLine = winningCombo => {
       this.crossingLine = <CrossingLine winningCombo = {winningCombo} ></CrossingLine>
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-
-      for(let i = 0; i < 9; i++){
-        let square = <Square 
-          key = {i} id = {i + 1} turn = {this.turn} 
-          changePlayerFunc = {this.changeTurnFunc} 
-          parentStateFunc = {this.changeStateFunc}
-          changeSquaresState = {this.changeSquaresState}
-          gameOver = {this.gameOver} >
-        </Square>;
-        this.squares.push(square);
-      }
-  }
-
   render() {
       return(
       <>
-        {this.header}
+        { <Header key = {`header${ this.state.turn}`} gameOver = {this.state.gameOver} turn = {this.state.turn} player = {this.state.player} winner = {this.state.winner}/> }
         <div className="field">
-          {this.squares}
+          
+          {this.squares.map( x => {
+            return <Square
+              key = {x} id = {x} turn = {this.state.turn}
+              changePlayerFunc = {this.changeTurnFunc}
+              changeSquaresState = {this.changeSquaresState}
+              gameOver = {this.state.gameOver} >
+               </Square>
+          })}
+          
           {this.crossingLine}
         </div>
       </>

@@ -2,11 +2,6 @@ import React, { Component, useState } from 'react';
 import './Header.css';
 
 export class Header extends Component {
-  turn = '';
-
-  player = '';
-
-  gameOver = false;
 
   info = '';
 
@@ -19,7 +14,6 @@ export class Header extends Component {
       this.info = `${this.props.player[0]} turn!`;
     }
 
-    this.state = {};
   }
 
   componentDidUpdate = () => {

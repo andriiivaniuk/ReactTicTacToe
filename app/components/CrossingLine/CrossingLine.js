@@ -6,7 +6,6 @@ export class CrossingLine extends Component {
     super(props)
 
     this.winningCombo = this.props.winningCombo.join("");
-    console.log(this.winningCombo);
 
     this.setPosition();
   }
