@@ -1,0 +1,30 @@
+.square{
+    display: block;
+    background-color: bisque;
+    width: 95px;
+    height: 95px;
+    border: 2px solid burlywood;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.square-clicked{
+
+    display: block;
+    width: 95px;
+    height: 95px;
+    background-color: aqua;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border: 2px solid burlywood;
+    color: black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 3em;
+    
+}
